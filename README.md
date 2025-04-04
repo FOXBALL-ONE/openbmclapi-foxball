@@ -1,3 +1,5 @@
+注意：这份fork是FOXBALL-ONE自己改的
+
 # BMCLAPI
 BMCLAPI是@bangbang93开发的BMCL的一部分，用于解决国内线路对Forge和Minecraft官方使用的Amazon S3 速度缓慢的问题。BMCLAPI是对外开放的，所有需要Minecraft资源的启动器均可调用。
 
@@ -66,6 +68,10 @@ docker compose up -d
 | ENABLE_UPNP         | 否  | false        | 启用 UPNP 端口映射                                                                                           |
 | SSL_KEY             | 否  | -            | （仅当开启BYOC时）  SSL 证书私钥。可以直接粘贴证书内容，也可以填写文件名                                                              |
 | SSL_CERT            | 否  | -            | （仅当开启BYOC时）  SSL 证书公钥。可以直接粘贴证书内容，也可以填写文件名                                                              |
+
+| NODE_NAME            | 是  | -            | 用于通知中的节点名称                                                              |
+| WEBHOOK_URL            | 是  | -            | WEBHOOK的URL地址，目前仅支持飞书                                                              |
+
 
 如果你在源码中发现了其他环境变量, 那么它们是为了方便开发而存在的, 可能会随时修改, 不要在生产环境中使用
 
