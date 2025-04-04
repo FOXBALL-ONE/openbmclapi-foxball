@@ -79,6 +79,7 @@
     "@types/range-parser": "^1.2.7",
     "@types/tail": "^2.2.1",
     "@typescript-eslint/parser": "^8.14.0",
+    "axios": "^1.8.4",
     "eslint": "^9.14.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
