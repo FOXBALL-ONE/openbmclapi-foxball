@@ -180,7 +180,6 @@ export class Cluster {
     if (!storageReady) {
       throw new Error('存储异常')
     }
-    sendWebhookNotification("正在检查缺失文件").then()
     logger.info('正在检查缺失文件')
     const missingFiles = await this.storage.getMissingFiles(fileList.files)
     if (missingFiles.length === 0) {
@@ -280,7 +279,6 @@ export class Cluster {
     if (hasError) {
       throw new Error('同步失败')
     } else {
-      sendWebhookNotification("同步完成").then()
       logger.info('同步完成')
     }
   }
@@ -611,6 +609,8 @@ export class Cluster {
     }
 
     logger.info(colors.rainbow('start doing my job'))
+    //正常工作的位置
+     sendWebhookNotification("开始正常工作")
     this.keepalive.start(this.socket)
   }
 
