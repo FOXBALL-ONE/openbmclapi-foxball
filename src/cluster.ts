@@ -40,7 +40,7 @@ import type {TokenManager} from './token.js'
 import type {IFileList} from './types.js'
 import {setupUpnp} from './upnp.js'
 import {checkSign, hashToFilename} from './util.js'
-import {sendWebhookNotification} from './webhook.js'
+import {sendWebhookNotification} from "./webhook.js";
 
 interface ICounters {
   hits: number
@@ -178,8 +178,10 @@ export class Cluster {
   public async syncFiles(fileList: IFileList, syncConfig: OpenbmclapiAgentConfiguration['sync']): Promise<void> {
     const storageReady = await this.storage.check()
     if (!storageReady) {
+      sendWebhookNotification('存储异常').then()
       throw new Error('存储异常')
     }
+
     logger.info('正在检查缺失文件')
     const missingFiles = await this.storage.getMissingFiles(fileList.files)
     if (missingFiles.length === 0) {
@@ -279,6 +281,7 @@ export class Cluster {
     if (hasError) {
       throw new Error('同步失败')
     } else {
+
       logger.info('同步完成')
     }
   }
@@ -449,13 +452,12 @@ export class Cluster {
       logger.error(err, 'exception')
     })
     this.socket.on('warden-error', (data) => {
-      sendWebhookNotification("巡检异常").then()
+      sendWebhookNotification(`主控回报巡检异常,${data}`).then()
       logger.warn(data, '主控回报巡检异常')
     })
 
     const io = this.socket.io
     io.on('reconnect', (attempt: number) => {
-      sendWebhookNotification(`在重试${attempt}次后恢复连接`).then()
       logger.info(`在重试${attempt}次后恢复连接`)
       if (this.wantEnable) {
         logger.info('正在尝试重新启用服务')
@@ -567,6 +569,7 @@ export class Cluster {
       .gc(files.files)
       .then((res) => {
         if (res.count === 0) {
+
           logger.info('没有过期文件')
         } else {
           logger.info(`文件回收完成，共删除${res.count}个文件，释放空间${prettyBytes(res.size)}`)
@@ -609,8 +612,6 @@ export class Cluster {
     }
 
     logger.info(colors.rainbow('start doing my job'))
-    //正常工作的位置
-     sendWebhookNotification("开始正常工作")
     this.keepalive.start(this.socket)
   }
 

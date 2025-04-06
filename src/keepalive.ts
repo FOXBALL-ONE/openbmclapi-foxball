@@ -7,7 +7,7 @@ import prettyBytes from 'pretty-bytes'
 import {Socket} from 'socket.io-client'
 import {Cluster} from './cluster.js'
 import {logger} from './logger.js'
-import {sendWebhookNotification} from './webhook.js'
+import {sendWebhookNotification} from "./webhook.js";
 
 export class Keepalive {
   public timer?: NodeJS.Timeout
@@ -46,7 +46,6 @@ export class Keepalive {
         milliseconds: ms('10s'),
       })
       if (!status) {
-        sendWebhookNotification("被主控断开连接")
         logger.fatal('kicked by server')
         return await this.restart()
       }
@@ -64,7 +63,7 @@ export class Keepalive {
 
   private async keepAlive(): Promise<boolean> {
     if (!this.cluster.isEnabled) {
-      sendWebhookNotification("节点被禁用")
+      sendWebhookNotification('被封禁')
       throw new Error('节点未启用')
     }
     if (!this.socket) {

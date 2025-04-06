@@ -10,6 +10,7 @@ import {config} from './config.js'
 import {logger} from './logger.js'
 import {TokenManager} from './token.js'
 import {IFileList} from './types.js'
+import { sendWebhookNotification } from './webhook.js'
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
@@ -49,6 +50,7 @@ export async function bootstrap(version: string): Promise<void> {
 
   const storageReady = await cluster.storage.check()
   if (!storageReady) {
+    sendWebhookNotification('存储异常').then()
     throw new Error('存储异常')
   }
 

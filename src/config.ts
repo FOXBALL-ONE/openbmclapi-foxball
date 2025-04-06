@@ -29,6 +29,9 @@ export class Config {
   public readonly webhook = env.get('WEBHOOK_URL').required().asString()
   public readonly  nodename = env.get('NODE_NAME').required().asString()
 
+
+
+
   public readonly flavor: IConfigFlavor
 
   private constructor() {
